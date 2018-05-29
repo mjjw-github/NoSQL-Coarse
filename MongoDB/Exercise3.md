@@ -1,63 +1,63 @@
 ## **Exercise 3: Create/Read[i.e., find()]/Update a Database Collection**
 
-see what databases exists
+See what databases exists.
 ```
 show dbs
 ```
-which databases are we connected to
+Which databases are we connected to?
 ```
 db
 ```
-switch database and show collections
+Switch database and show collections.
 ```
 use local
 show collections
 ```
-what documents are within the collections using db. means current database then collection "startup_log" then the method .find() to get data from that collection in a .pretty() format.
+What documents are within the collections.  Using db. means current database then collection "startup_log" then the method .find() to get data from that collection in a .pretty() format.
 ```
 db.startup_log.find().pretty()
 ```
-how many documents are in the collection
+How many documents are in the collection?
 ```
 db.startup_log.count()
 ```
-a database is created automatically upon the first creation of a document when it"s added to a collection "myfirstcollection" for this new database
+A database is created automatically upon the first creation of a document when it"s added to a collection "myfirstcollection" for this new database.
 ```
 db.myfirstcollection.insert({name:"marklogic"})
 show dbs
 show collections
 db.mydb.myfirstcollection.find().pretty()
 ```
-to interact with a database, we use the pattern: db.{collectionname}.:method}
+To interact with a database, we use the pattern: db.{collectionname}.:method}
 ```
 db.myfirstcollection.[tab][tab]
 ```
 ```
 db.myfirstcollection.find()
 ```
-deleting records from this collection is accomplished with this method remove
+Deleting records from this collection is accomplished with this method remove.
 ```
 db.myfirstollection.remove({})
 show collections
 ```
-notice how the collection myfirstcollection still exists; so to remove a collection use the drop method
+Notice how the collection myfirstcollection still exists; so to remove a collection use the drop method.
 ```
 db.myfirstollection.drop()
 ```
 ```
 show myfirstollection
 ```
-has the db been deleted
+Has the db been deleted?
 ```
 show dbs
 ```
-to delete a database full of collections. first create two collections
+To delete a database full of collections, first create two collections.
 ```
 db.myfirstollection.insert({name:"marklogic"})
 db.mysecondcollection.insert({type:"multi-model"})
 show collections
 ```
-to delete the database requires that we make sure we are connected to the database we want to drop
+Deleting the database requires that we make sure we are connected to the database we want to drop.
 ```
 db
 db.dropDatabase()
@@ -65,7 +65,7 @@ show dbs
 ```
 **Update Operations**
 
-Insert a single document
+Insert a single document.
 ```
 use crud
 db.myfirstcollection.insert({  
@@ -91,8 +91,8 @@ db.myfirstcollection.insert({
 ```
 db.myfirstcollection.find().pretty()
 ```
-notice a primary key bson type is added in the form "_id": objectid("").  this objectid is unique across all databases
-however, you can specify the pk
+Notice a primary key bson type is added in the form "_id": objectid("").  This objectid is unique across all databases;
+however, you can specify the pk.
 ```
 db.myfirstcollection.insert({  
    _id:1,
@@ -118,7 +118,7 @@ db.myfirstcollection.insert({
 ```
 db.myfirstcollection.find().pretty() 
 ```
-Let"s try a multiple insert by inserting an array of documents into the myfirstcollection collection 
+Let's try a multiple insert by inserting an array of documents into the myfirstcollection collection. 
 ```
 array =[{
 	_id:1, 
@@ -190,54 +190,54 @@ array =[{
 ```
 db.myfirstcollection.insert(array)
 ```
-Notice the error occurred in the on _id: 1 and the insert stopped after that error. To enable mongodb to continue on just add {ordered: false}
+Notice the error occurred in the on _id: 1 and the insert stopped after that error. To enable mongodb to continue on just add {ordered: false}.
 ```
 db.myfirstcollection.insert(array, {ordered: false})
 db.myfirstcollection.find().pretty()
 ```
-Now it finished inserting the rest except where there were duplicates
-Let"s save the results from the find method cursor into a variable named cursor
+Now it finished inserting the rest except where there were duplicates.
+Let's save the results from the find method cursor into a variable named cursor.
 ```
 cursor = db.myfirstcollection.find();null;
 ```
-the null prevents the shell from using the returned cursor and the results are saved in variable cursor
-Let"s count the documents in the cursor
+Null prevents the shell from using the returned cursor and the results are saved in variable cursor.
+Let's count the documents in the cursor.
 ```
 cursor.count()
 ```
 ```
 cursor.hasNext()
 ```
-True means there are still documents to retrieve from the cursor; hence, false means there are no more documents to return
-let"s get the 1st document from the cursor
+True means there are still documents to retrieve from the cursor; hence, false means there are no more documents to return.
+Let"s get the 1st document from the cursor.
 ```
 cursor.next()
 ```
-We can loop through documents to print all docs from the cursor
+We can loop through documents to print all docs from the cursor.
 ```
 while(cursor.hasNext()){
    printjson(cursor.next())
 };
 ```
-Alternatively, we can use the forEach() method which accepts javascript functions as a single argument to pass a current document
+Alternatively, we can use the forEach() method which accepts javascript functions as a single argument to pass a current document.
 ```
 cursor = db.numbers.find(); null;
 ```
 ```
 cursor.forEach(function(doc) {printjson(doc);})
 ```
-To understand the cursor better let"s create a new collection with more than 101 documents say 105
+To understand the cursor better, create a new collection with more than 101 documents (e.g., 105).
 ```
 for (i=0; i<105; i++) {db.numbers.insert({_id:i, number: i})}
 ```
 ```
 db.numbers.count()
 ```
-Now let"s call the find method again to store the results in the cursor variable
+Now let's call the find method again to store the results in the cursor variable.
 ```
 cursor = db.numbers.find(); null;
 ```
-how many cursors are open right now
+How many cursors are open right now?
 ```
 db.serverStatus().metrics.cursor
 cursor.hasNext()
@@ -264,7 +264,7 @@ db.myfirstcollection.find({initialrelease: {$eq: 2008}}).pretty()
 db.myfirstcollection.find({initialrelease: 2009}).pretty()
 db.myfirstcollection.find({initialrelease: {$lt: 2011, $gt: 2008}}).pretty()
 ```
-We can even use lt and gt for strings
+We can even use lt and gt for strings.
 ```
 db.myfirstcollection.find({name: {$gt: "l", $lt: "n"}}).pretty()
 db.myfirstcollection.find({name: {$gt: "d", $lt: "maa"}}).pretty()
@@ -321,7 +321,7 @@ Use find() to retrieve documents that match certain fields or type
 
 {field: { $exists: <boolean> }}  Matches documents that contain a field
 {field: { $type: <BSON Type> }}
-Let"s find all the documents that do not contain the field "language"
+Let's find all the documents that do not contain the field "eventual"
 ```
 db.myfirstcollection.find( {eventual: {$exists: false}}).pretty()
 ```
@@ -333,18 +333,16 @@ db.myfirstcollection.find( {sql: {$not: {$type: "string"}}}).pretty()
 db.myfirstcollection.find( {sql: {$not: {$type: 2}}}).pretty()
 ```
 You can do this for types "array" etc.
-Note there is a bug in MongoDB 3.4 and prior
 ```
 db.myfirstcollection.find( {apis: {$type: "array"}}).pretty()
 db.myfirstcollection.find( {apis: {$type: "string"}}).pretty()
 ```
-Find embedded documents (e.g., location:)
+Find embedded documents (e.g., consistency:)
 ```
 db.myfirstcollection.find( {consistency:{ eventual:"yes", immediate:"can be decided upon write"}}).pretty()
 db.myfirstcollection.find( {consistency:{ eventual:"yes"}}).pretty()
 ```
-$where operator uses a JavaScript expression or function as it"s parameter that can be executed for all documents
-This a slow operation that cannot leverage indexes, so avoid it if you can.
+$where operator uses a JavaScript expression or function as it's parameter that can be executed for all documents. However, this a slow operation that cannot leverage indexes, so avoid it if you can.
 ```
 db.myfirstcollection.find( {$where: "this.initialrelease > 2008"}).pretty() //string containing javascript expression "this.initialrelease > 2008"
 ```
@@ -354,7 +352,7 @@ db.myfirstcollection.find( {$where: "this.initialrelease > 2008"}).pretty() //st
 ```
 db.collection.find( { apis: { $size: 2 } } );
 ```
-returns all documents in collection where field is an array with 2 elements.
+This returns all documents in collection where field is an array with 2 elements.
 
 The $elemMatch operator matches documents that contain an array field with at least one element that matches all the specified query criteria.
 
@@ -373,7 +371,7 @@ db.myfirstcollection.find({databases: {$size: 6}}).pretty()
 ```
 $size is exact so if your looking for gt or lt use"
 ```
-db.myfirstcollection.find({$where: "this.language instanceof Array && this.language.length > 1"}).pretty()
+db.myfirstcollection.find({$where: "this.languag1e instanceof Array && this.language.length > 1"}).pretty()
 db.myfirstcollection.find({ degrees: { degree: "BS", year: {$gt: 2013}}}).pretty()
 ```
 What if you only want certain fields to limit the return of data.  This can be done with projections.  Similiar to select in sql.
@@ -518,7 +516,7 @@ for (i = 0; i < 105; i++) {
     })
 }
 ```
-Let"s remove all documents with id < 7
+Let"s remove all documents with id < 7.
 ```
 db.numbers.remove({_id: {$lt: 7}})
 ```
