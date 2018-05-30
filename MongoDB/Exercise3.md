@@ -1,4 +1,4 @@
-## **Exercise 3: Create/Read[i.e., find()]/Update a Database Collection**
+## **Exercise 3: Create/Read/Update a Database Collection**
 
 See what databases exists.
 ```
@@ -289,7 +289,7 @@ Boolean and Logical Operations with find()
 
 {field: {$not: {conditional}}
   
-Let"s find the teachers with multiple expressions
+Let' find the initial release with multiple expressions.
 
 ```
 db.myfirstcollection.find({  
@@ -360,56 +360,53 @@ The $elemMatch operator matches documents that contain an array field with at le
 
 If you specify only a single <query> condition in the $elemMatch expression, you do not need to use $elemMatch.
 
-Find databases that are with rankings in year 20
-```
-db.myfirstcollection.find( {language: "Scala"}).pretty()
-```
 The $all operator selects the documents where the value of a field is an array that contains all the specified elements.
 ```
-db.myfirstcollection.find({language: {$all: ["Scala","Go","C"]}}).pretty()
-db.myfirstcollection.find({databases: {$size: 6}}).pretty()
+db.myfirstcollection.find({"apis": {$all: ["Java","Go","C"]}}).pretty()
+db.myfirstcollection.find({"apis": {$size: 2}}).pretty()
 ```
 $size is exact so if your looking for gt or lt use"
 ```
-db.myfirstcollection.find({$where: "this.languag1e instanceof Array && this.language.length > 1"}).pretty()
-db.myfirstcollection.find({ degrees: { degree: "BS", year: {$gt: 2013}}}).pretty()
+db.myfirstcollection.find({$where: "this.apis instanceof Array && this.apis.length < 3"}).pretty()
+db.myfirstcollection.find({initialrelease: {$gt:2008}}).pretty()
 ```
 What if you only want certain fields to limit the return of data.  This can be done with projections.  Similiar to select in sql.
 
 find(criteria, projection) and findOne(criteria, projection) methods accepts 2 arguments criteria and projection.  So when you omit the projection it will return all the documents. The projection argument can accept values of boolean true/1 to include the field or false/0 to exclude a field from the find() method, but you can also use an expression of projection operators.
 
-Let"s return every field except age
+Let"s return every field except partitioning
 ```
-db.myfirstcollection.findOne({age: 0})
+ db.myfirstcollection.find({"name":"mongodb"},{"partitioning":0}).pretty()
 ```
+
 We can include/exclude fields from embedded documents as well
 ```
-db.myfirstcollection.find({name: "ted"},{"location.town": true}).pretty()
-db.myfirstcollection.find({name: "ted"},{"location.town": false}).pretty()
+db.myfirstcollection.find({name: "mongodb"},{"consistency.eventual": true}).pretty()
+db.myfirstcollection.find({name: "cassandra"},{"consistency.eventual": false}).pretty()
 ```
 Let"s look at the projection operators: $, $elemMatch, $meta, $slice
 
 $ is always used in tandem with a condition and the operator syntax {"<array>.$":1}
 $ limits elements in the return array to 1
 ```
-db.myfirstcollection.find({databases: {$in: ["HBase"]}},{"databases.$": 1}).pretty()
+db.myfirstcollection.find({"apis": {$in: ["C#"]}},{"apis.$": 3}).pretty()
 ```
 This will not work without a condition on the array (e.g., $in)
 We can use the elemMatch as a projections operator
 ```
-db.myfirstcollection.find({databases: {$in: ["HBase"]}},{"databases.$elemMatch": 1}).pretty()
+db.myfirstcollection.find({"apis": {$in: ["C#"]}},{"apis.$elemMatch": 1}).pretty()
 ```
 $slice returns many elements
 ```
-db.myfirstcollection.find({name: "jenn"}, {databases: true})
+db.myfirstcollection.find({name: "mongodb"}, {"apis": true})
 ```
 Get the first 2 elements using {$slice: limit} on an array
 ```
-db.myfirstcollection.find({name: "jenn"}, {databases: {$slice: 2}}).pretty()
+db.myfirstcollection.find({name: "mongodb"}, {"apis": {$slice: 2}}).pretty()
 ```
 Let"s use the skip and limit on {$slice: [skip,limit]}
 ```
-db.myfirstcollection.find({name: "jenn"}, {databases: {$slice: [3,2]}}).pretty()
+db.myfirstcollection.find({name: "mongodb"}, {apis: {$slice: [3,2]}}).pretty()
 ```
 Limit and Skip results
 ```
@@ -429,10 +426,10 @@ Note: Different types are sorted differently. see https://docs.mongodb.com/manua
 Modifying documents with update(criteria, update, {upsert: bool, multi: bool, writeConcern: <document>})
 
 Replacing a whole document (i.e., all fields except primary key)
-Say Miguel change his name to Bart
+Say we need to change "type" to document.
 ```
-db.myfirstcollection.update({_id: 5}, {name: "bart"})
-db.myfirstcollection.find({_id: 5}).pretty()
+db.myfirstcollection.update({name:"mongodb" }, {type: "document"})
+db.myfirstcollection.find({name:"mongodb"}).pretty()
 ```
 Notice it replaced everything except the primary key _id
 
