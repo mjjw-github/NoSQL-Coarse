@@ -44,7 +44,7 @@ https://www.mongodb.com/products/compass
 
 https://www.mongodb.com/products/bi-connector
 
-**3rd Party ODBC Driver for PowerBI:** 
+3rd Party ODBC Driver for PowerBI: 
 
 https://www.progress.com/blogs/mongodb-odbc-driver-for-data-integration-with-power-bi
 
