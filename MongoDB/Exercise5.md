@@ -10,4 +10,4 @@ mongoimport --db test --collection restaurants --drop --file ~/Downloads/primer-
 ```
 Open MongoDB Compass and enter the mongod hostname and port
 
-Open the test database
+Open the test database.
