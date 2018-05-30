@@ -36,6 +36,8 @@ https://db-engines.com/en/ranking
 
 http://www.aptude.com/blog/entry/hadoop-vs-mongodb-which-platform-is-better-for-handling-big-data
 
+http://www.arl.army.mil/arlreports/2016/ARL-CR-0809.pdf
+
 **DataViz / BI Dashboarding Tools on MongoDB**
 
 https://www.mongodb.com/products/compass
