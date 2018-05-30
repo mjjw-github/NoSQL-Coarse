@@ -1,4 +1,4 @@
-## Exercise 5: Compass
+## Exercise 5: mongoimport and Compass
 
 Retrieve the dataset from: https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json and save to a file named primer-dataset.json.
 
