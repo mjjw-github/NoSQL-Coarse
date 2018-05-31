@@ -130,7 +130,7 @@ array =[{
    name:"redis",
    type:"key-value store",
    sql:0,
-   "initial.release":2009,
+   initialrelease:"unknown",
    license:"open source",
    apis:["C","C#","C++","Clojure","Crystal","D","Dart","Elixir","Erlang","Fancy","Go","Haskell","Haxe","Java","JavaScript (Node.js)","Lisp","Lua","MatLab","Objective-C","OCaml","Pascal","Perl","PHP","Prolog","Pure Data","Python","R","Rebol","Ruby","Rust","Scala","Scheme","Smalltalk","Swift","Tcl","Visual Basic",],
    rankings:[{rank:3,year:2013,medianscore:38.875},
@@ -418,8 +418,8 @@ To sort documents in MongoDB, you need to use sort() method. The method accepts 
 
 Sort on a field with different types: Numbers and Strings
 ```
-db.myfirstcollection.find({},{category: true}).sort({category: 1})
-db.myfirstcollection.find({},{category: true}).sort({category:-1})
+db.myfirstcollection.find({},{initialrelease: true}).sort({category: 1})
+db.myfirstcollection.find({},{initialrelease: true}).sort({category:-1})
 ```
 Note: Different types are sorted differently. see https://docs.mongodb.com/manual/reference/bson-type-comparison-order/
 
@@ -435,76 +435,73 @@ Notice it replaced everything except the primary key _id
 
 To update a selected field
 ```
-db.myfirstcollection.update({_id: 4},{$set: {age: 33, dept: "k82d"}})
+db.myfirstcollection.update({_id: 4},{$set: {sql: 1, type: "search"}})
 db.myfirstcollection.find({_id: 4}).pretty()
 ```
 Remove fields
 ```
-db.myfirstcollection.update({_id: 4},{$unset: {age: "", dept: ""}})
+db.myfirstcollection.update({_id: 4},{$unset: {sql: "", type: ""}})
 db.myfirstcollection.find({_id: 4}).pretty()
 ```
 Update & Remove fields
 ```
-db.myfirstcollection.update({_id: 4},{$set: {name: "karol", age: 23},$unset: {building:""}})
+db.myfirstcollection.update({_id: 4},{$set: {name: "elk", type: "search engine"},$unset: {initialrelease:""}})
 db.myfirstcollection.find({_id: 4}).pretty()
 ```
 Update an embedded document
 ```
-db.myfirstcollection.update({_id: 4},{$set: {"location.state": "va","location.town": "McLean"}})
-db.myfirstcollection.find({_id: 4}).pretty()
+db.myfirstcollection.update({_id: 3},{$set: {consistency:{ eventual:"yup", immediate:"decide on write"}})
+db.myfirstcollection.find({_id: 3}).pretty()
 ```
-Arithmethic modifications $inc, $mul, $min, $max
-Let"s increment Karol"s age by 2
+Arithmethic modifications $inc, $mul
+Let's increment the initialrelease by 2
 ```
-db.myfirstcollection.update({_id: 4},{$inc: {age: 2}})
+db.myfirstcollection.update({_id: 4},{$inc: {initialrelease: 2}})
 db.myfirstcollection.find({_id: 4}).pretty()
-db.myfirstcollection.update({_id: 4},{$inc: {age: -2}})
+db.myfirstcollection.update({_id: 4},{$inc: {initialrelease: -2}})
 db.myfirstcollection.find({_id: 4}).pretty()
-db.myfirstcollection.update({_id: 4},{$mul: {age: 2}})
+db.myfirstcollection.update({_id: 4},{$mul: {initialrelease: 2}})
 db.myfirstcollection.find({_id: 4}).pretty()
-db.myfirstcollection.update({_id: 4},{$mul: {age: 0.5}})
-db.myfirstcollection.find({_id: 4}).pretty()
-db.myfirstcollection.update({_id: 4},{$max: {age: 26}})
-db.myfirstcollection.find({_id: 4}).pretty()
-db.myfirstcollection.update({_id: 4},{$max: {age: 24}})
+db.myfirstcollection.update({_id: 4},{$mul: {initialrelease: 0.5}})
 db.myfirstcollection.find({_id: 4}).pretty()
 ```
 Add ($addToSet, $push) or remove elements of an array
 $addToSet 1st checks if the element is in the array, but $push doesn"t
 ```
-db.myfirstcollection.update({_id: 4},{$addToSet: {databases: "MongoDB"}})
+db.myfirstcollection.update({_id: 4},{$addToSet: {name: "elk"}})
 db.myfirstcollection.find({_id: 4}).pretty()
-db.myfirstcollection.update({_id: 4},{$addToSet: {databases: {$each: ["SciDB", "VoltDB"]}}})
+db.myfirstcollection.update({_id: 4},{$addToSet: {apis: {$each: ["Java8", "Java9"]}}})
 db.myfirstcollection.find({_id: 4}).pretty()
 ```
 You can pass an upsert boolean argument to the update method if upsert returns true.
 ```
-db.myfirstcollection.find({name: "maryann"})
-db.myfirstcollection.update({name: "maryann"}, {$set: {age: 22}})
+db.myfirstcollection.find({name: "mongodb"})
+db.myfirstcollection.update({name: "mongodb"}, {$set: {initialrelease: 2020}})
 ```
 As you can see no documents were modified
 ```
-db.myfirstcollection.update({name: "maryann"}, {$set: {age: 22}}, {upsert: true})
-db.myfirstcollection.find({name: "maryann"}).pretty()
-db.myfirstcollection.update({name: "maryann"}, {$set: {age: 22}}, {upsert: true})
+db.myfirstcollection.update({name: "mongodb"}, {$set: {initialrelease: 2009}}, {upsert: true})
+db.myfirstcollection.find({name: "mongodb"}).pretty()
+db.myfirstcollection.update({name: "mongodb"}, {$set: {initialrelease: 2009}}, {upsert: true})
 ```
-It"s already in the collection
+It's already in the collection
 Update multiple documents using the second argument of the update method multi: true
 By default only one document can be updated so make sure you use the multi: true argument
 ```
-db.myfirstcollection.update({age: {$gte: 20}}, {$inc: {age: 10}}, {multi: true})
-db.myfirstcollection.update({age: {$gte: 20}}, {$inc: {age: 10}}, {multi: true})
+db.myfirstcollection.update({initialrelease: {$gte: 2008}}, {$inc: {initialrelease: 10}}, {multi: true})
+db.myfirstcollection.find()
 ```
-WriteResult({ "nMatched" : 7, "nUpserted" : 0, "nModified" : 7 }
+
 ```
-db.myfirstcollection.find().pretty()
+db.myfirstcollection.find({initialrelease: {$gt: 2010}}).pretty()
 ```
-Notice everyone"s age is now increment by 10 to 30+
-Let"s delete some documents using the remove() method.
+Notice initial releases are now increment by 10.
+
+Let's delete some documents using the remove() method.
 ```
 show collections
 ```
-Let"s use the numbers collection we created earlier to demonstrate the remove method. If you dropped it, just recreate it using
+Let's use the numbers collection we created earlier to demonstrate the remove method. If you dropped it, just recreate it using
 ```
 for (i = 0; i < 105; i++) {
     db.numbers.insert({
