@@ -62,3 +62,9 @@ https://www.mongodb.com/blog/post/building-your-first-application-mongodb-creati
 https://zellwk.com/blog/crud-express-mongodb/
 
 https://www.codeschool.com/mean
+
+***Cloud Hosted Instances***
+
+https://mlab.com/
+
+https://www.mongodb.com/cloud/atlas
