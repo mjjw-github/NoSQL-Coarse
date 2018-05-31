@@ -51,6 +51,10 @@ https://www.progress.com/blogs/mongodb-odbc-driver-for-data-integration-with-pow
 
 https://www.zoomdata.com/docs/2.6/connecting-to-mongodb.html
  
+***Schema Design***
+
+https://www.mongodb.com/blog/post/6-rules-of-thumb-for-mongodb-schema-design-part-1
+
 **Building Web Apps**
 
 https://www.mongodb.com/blog/post/building-your-first-application-mongodb-creating-rest-api-using-mean-stack-part-1
